@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="th">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fff7fb">
+<meta name="theme-color" content="#F8FAFC">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Training Picker">
@@ -11,109 +11,526 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <title>Daily Training Picker</title>
 <style>
-:root{--ink:#23324a;--muted:#6f7e94;--line:#e7edf5;--sky:#dff2ff;--mint:#def7ea;--yellow:#fff0b9;--pink:#ffd8e8;--lav:#ebe5ff;--peach:#ffe6ce;--red:#ffe0e0}
-*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(#fff7fb,#f7fbff 55%,#fffdf9);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",sans-serif}
-body{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
-.w{max-width:760px;margin:auto;padding:16px 14px 44px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;margin-top:14px;box-shadow:0 8px 24px #44608014}.hero{background:linear-gradient(135deg,#fff,#fff0f7,#eef8ff)}
-h1{font-size:28px;margin:0 0 8px}h2{font-size:20px;margin:0 0 10px}.muted{color:var(--muted)}.tiny{font-size:12px}
-.badges{display:flex;gap:7px;flex-wrap:wrap}.badge{padding:7px 9px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700}
-.q{margin:16px 0}.title{font-weight:800;display:block;margin-bottom:8px}.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.opt input{display:none}.opt label{display:block;padding:11px;border-radius:15px;border:1.5px solid var(--line);text-align:center;background:#fbfcfe}
-.opt input:checked+label{background:#eaf6ff;border-color:#73baf3}.slider{display:flex;gap:10px;align-items:center}.slider input{width:100%}.val{min-width:64px;text-align:right;font-weight:800}
-button{width:100%;border:0;border-radius:16px;padding:14px;font-size:16px;font-weight:800;color:#fff;background:linear-gradient(135deg,#5aaef1,#8a7bf7)}
-button.secondary{background:#fff;color:var(--ink);border:1px solid var(--line);margin-top:8px}.result{display:none}.result.show{display:block}.head{display:flex;gap:12px;align-items:center}.ico{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:25px}
-.sky{background:var(--sky)}.mint{background:var(--mint)}.yellow{background:var(--yellow)}.pink{background:var(--pink)}.lav{background:var(--lav)}.peach{background:var(--peach)}.red{background:var(--red)}
-.kpis{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.kpi{font-size:12px;padding:7px 9px;border-radius:999px;background:#f5f8fb;border:1px solid var(--line);font-weight:700}
-.sum{padding:12px;border-left:4px solid #6db9f5;background:#f6fbff;border-radius:14px}.step{padding:12px;border:1px solid var(--line);border-radius:15px;margin-top:8px}
-.tabbar{display:flex;gap:8px;margin-top:14px}.tabbar button{padding:10px;font-size:14px}.history{display:none}.history.show{display:block}.history-item{padding:12px;border:1px solid var(--line);border-radius:15px;margin-top:8px;background:#fff}
-.foot{text-align:center;color:#79879a;font-size:12px;margin-top:14px}
-@media(max-width:520px){h1{font-size:25px}}
+:root{
+  --bg:#F6F8FB;
+  --surface:#FFFFFF;
+  --surface-2:#F9FBFD;
+  --ink:#111827;
+  --muted:#6B7280;
+  --line:#E5E7EB;
+  --accent:#5B7CFA;
+  --accent-2:#8B5CF6;
+  --teal:#DDF7F2;
+  --blue:#E8F0FF;
+  --amber:#FFF3D6;
+  --violet:#EFE9FF;
+  --rose:#FFE9EF;
+  --orange:#FFF0E3;
+  --danger:#FFE7E7;
+  --shadow:0 18px 45px rgba(17,24,39,.08);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  background:
+    radial-gradient(circle at top right, rgba(139,92,246,.10), transparent 30%),
+    radial-gradient(circle at top left, rgba(91,124,250,.10), transparent 26%),
+    var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Avenir Next","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+.app{max-width:760px;margin:0 auto;padding:18px 14px 44px}
+.hero{
+  background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(250,251,255,.96));
+  border:1px solid rgba(229,231,235,.9);
+  border-radius:28px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(12px);
+}
+.eyebrow{
+  font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+  margin-bottom:8px;
+}
+h1{font-size:32px;line-height:1.08;letter-spacing:-.03em;margin:0 0 10px;font-weight:800}
+h2{font-size:21px;line-height:1.2;letter-spacing:-.02em;margin:0 0 12px}
+h3{font-size:17px;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.muted{color:var(--muted)}
+.caption{font-size:13px;line-height:1.5;color:var(--muted)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.badge{
+  padding:8px 11px;border-radius:999px;background:#fff;border:1px solid var(--line);
+  font-size:12px;font-weight:750;box-shadow:0 2px 7px rgba(17,24,39,.03)
+}
+.nav{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px;padding:5px;background:#EEF2F7;border-radius:16px
+}
+.nav button{
+  margin:0;border:0;border-radius:12px;padding:11px 12px;background:transparent;color:var(--muted);
+  font-size:14px;font-weight:800;box-shadow:none
+}
+.nav button.active{background:#fff;color:var(--ink);box-shadow:0 4px 12px rgba(17,24,39,.08)}
+.card{
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(229,231,235,.95);
+  border-radius:24px;
+  padding:18px;
+  margin-top:14px;
+  box-shadow:var(--shadow);
+}
+.question{margin:18px 0}
+.question-title{display:block;font-size:14px;font-weight:800;margin-bottom:9px}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.option input{position:absolute;opacity:0;pointer-events:none}
+.option label{
+  display:block;padding:12px 10px;border-radius:15px;border:1.5px solid var(--line);
+  background:var(--surface-2);text-align:center;font-size:14px;font-weight:700;color:#374151;
+  transition:.16s ease;cursor:pointer
+}
+.option input:checked+label{
+  background:var(--blue);border-color:#94AEFF;color:#2443A5;
+  box-shadow:0 0 0 3px rgba(91,124,250,.10)
+}
+.slider-row{display:flex;align-items:center;gap:12px}
+.slider-row input{width:100%;accent-color:var(--accent)}
+.slider-value{
+  min-width:76px;text-align:right;font-size:14px;font-weight:800;color:#1F2937;
+  padding:7px 9px;border-radius:11px;background:#F3F6FA
+}
+.primary{
+  width:100%;border:0;border-radius:16px;padding:15px 16px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;
+  font-size:16px;font-weight:800;letter-spacing:-.01em;
+  box-shadow:0 12px 24px rgba(91,124,250,.22);cursor:pointer
+}
+.secondary{
+  width:100%;border:1px solid var(--line);border-radius:16px;padding:13px 16px;
+  background:#fff;color:var(--ink);font-size:14px;font-weight:800;cursor:pointer;margin-top:9px
+}
+.result{display:none}.result.show{display:block}
+.result-head{display:flex;gap:12px;align-items:center}
+.icon-box{
+  width:52px;height:52px;border-radius:17px;display:grid;place-items:center;font-size:26px;
+  flex:0 0 auto
+}
+.blue{background:var(--blue)}.teal{background:var(--teal)}.amber{background:var(--amber)}
+.violet{background:var(--violet)}.rose{background:var(--rose)}.orange{background:var(--orange)}.danger{background:var(--danger)}
+.kpis{display:flex;gap:8px;flex-wrap:wrap;margin:13px 0}
+.kpi{
+  font-size:12px;padding:8px 10px;border-radius:999px;background:#F4F6F9;border:1px solid var(--line);font-weight:750
+}
+.focus{
+  padding:13px 14px;border-radius:15px;background:#F6F8FF;border:1px solid #E8ECFF;
+  color:#27324A;font-size:14px;line-height:1.55
+}
+.step{
+  margin-top:9px;padding:13px 14px;border-radius:16px;border:1px solid var(--line);background:#fff
+}
+.step-title{font-size:13px;font-weight:800;margin-bottom:3px}
+.step-body{font-size:13px;line-height:1.5;color:var(--muted)}
+.history-page{display:none}.history-page.show{display:block}
+.history-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.history-count{font-size:12px;font-weight:800;color:var(--muted)}
+.history-item{
+  padding:14px;border:1px solid var(--line);border-radius:17px;margin-top:10px;background:#fff
+}
+.history-date{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}
+.history-type{font-size:15px;font-weight:800;margin-bottom:4px}
+.history-meta{font-size:12px;line-height:1.5;color:var(--muted)}
+.empty{
+  text-align:center;padding:30px 16px;color:var(--muted);font-size:14px
+}
+.footer{
+  text-align:center;color:#8A94A3;font-size:11px;font-weight:650;letter-spacing:.02em;margin-top:18px
+}
+.toast{
+  position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);
+  background:#111827;color:#fff;padding:10px 14px;border-radius:999px;font-size:13px;font-weight:700;
+  opacity:0;pointer-events:none;transition:.2s;z-index:99;box-shadow:0 12px 30px rgba(17,24,39,.22)
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:520px){h1{font-size:29px}.app{padding-left:12px;padding-right:12px}.card{padding:16px}}
 </style>
 </head>
-<body><div class="w">
-<section class="card hero">
-<h1>🌈 วันนี้ควรออกอะไรดี?</h1>
-<div class="muted">เช็ก readiness แล้วให้แอปช่วยเลือก session ที่เหมาะกับเป้าหมาย <b>ลีนขึ้น + แข็งแรงขึ้น + HR ไม่พุ่งง่าย + เล่นเทนนิสได้นานขึ้น</b></div>
-<div class="badges"><span class="badge">Easy</span><span class="badge">Long</span><span class="badge">Strength</span><span class="badge">Tennis</span><span class="badge">Progression</span></div>
-<div class="tabbar"><button onclick="showPicker()">เลือกวันนี้</button><button class="secondary" onclick="showHistory()">ประวัติ</button></div>
-</section>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="eyebrow">Daily Training Picker</div>
+    <h1>What should I train today?</h1>
+    <p class="muted">A simple readiness-based guide to improve your running and tennis performance without stacking too much fatigue.</p>
+    <div class="badges">
+      <span class="badge">Running endurance</span>
+      <span class="badge">Tennis conditioning</span>
+      <span class="badge">Strength</span>
+      <span class="badge">Recovery</span>
+    </div>
+    <div class="nav" aria-label="Main navigation">
+      <button id="navToday" class="active" type="button">Today</button>
+      <button id="navHistory" type="button">History</button>
+    </div>
+  </section>
 
-<section id="picker" class="card"><h2>เช็กความพร้อมวันนี้ ✨</h2>
-<div class="q"><label class="title">1) นอนกี่ชั่วโมง?</label><div class="slider"><input id="sleep" type="range" min="4" max="10" step=".25" value="7.5"><div class="val"><span id="sv">7.5</span> ชม.</div></div></div>
+  <main>
+    <section id="pickerPage" class="card">
+      <h2>Readiness check</h2>
+      <p class="caption">Answer based on how you feel today. The recommendation prioritizes consistency, recovery, and your weekly training balance.</p>
 
-<div class="q"><label class="title">2) วันนี้รู้สึกสดแค่ไหน?</label><div class="opts">
-<div class="opt"><input type="radio" name="energy" id="e1" value="low"><label for="e1">😵 ต่ำ</label></div>
-<div class="opt"><input type="radio" name="energy" id="e2" value="mid" checked><label for="e2">🙂 กลาง ๆ</label></div>
-<div class="opt"><input type="radio" name="energy" id="e3" value="high"><label for="e3">⚡ สดมาก</label></div>
-<div class="opt"><input type="radio" name="energy" id="e4" value="symptom"><label for="e4">🤢 มึน/คลื่นไส้</label></div>
-</div></div>
+      <div class="question">
+        <label class="question-title" for="sleep">1. How many hours did you sleep?</label>
+        <div class="slider-row">
+          <input id="sleep" type="range" min="4" max="10" step=".25" value="7.5">
+          <div class="slider-value"><span id="sleepValue">7.5</span> h</div>
+        </div>
+      </div>
 
-<div class="q"><label class="title">3) ขาล้า/เจ็บไหม?</label><div class="opts">
-<div class="opt"><input type="radio" name="legs" id="l1" value="fresh" checked><label for="l1">🌱 สด</label></div>
-<div class="opt"><input type="radio" name="legs" id="l2" value="mild"><label for="l2">😐 ล้าเล็กน้อย</label></div>
-<div class="opt"><input type="radio" name="legs" id="l3" value="heavy"><label for="l3">🪫 หนักมาก</label></div>
-<div class="opt"><input type="radio" name="legs" id="l4" value="pain"><label for="l4">⚠️ เจ็บ</label></div>
-</div></div>
+      <div class="question">
+        <span class="question-title">2. How is your energy today?</span>
+        <div class="options">
+          <div class="option"><input type="radio" name="energy" id="energyLow" value="low"><label for="energyLow">😵 Low</label></div>
+          <div class="option"><input type="radio" name="energy" id="energyMid" value="mid" checked><label for="energyMid">🙂 Okay</label></div>
+          <div class="option"><input type="radio" name="energy" id="energyHigh" value="high"><label for="energyHigh">⚡ Great</label></div>
+          <div class="option"><input type="radio" name="energy" id="energySymptom" value="symptom"><label for="energySymptom">🤢 Dizzy / nauseous</label></div>
+        </div>
+      </div>
 
-<div class="q"><label class="title">4) วันนี้มีเทนนิสไหม?</label><div class="opts">
-<div class="opt"><input type="radio" name="tennis" id="t1" value="none" checked><label for="t1">ไม่มี</label></div>
-<div class="opt"><input type="radio" name="tennis" id="t2" value="light"><label for="t2">🎾 เบา/หลายคน</label></div>
-<div class="opt"><input type="radio" name="tennis" id="t3" value="hard"><label for="t3">🔥 Singles/หนัก</label></div>
-<div class="opt"><input type="radio" name="tennis" id="t4" value="yesterday"><label for="t4">เมื่อวานหนัก</label></div>
-</div></div>
+      <div class="question">
+        <span class="question-title">3. How do your legs feel?</span>
+        <div class="options">
+          <div class="option"><input type="radio" name="legs" id="legsFresh" value="fresh" checked><label for="legsFresh">🌱 Fresh</label></div>
+          <div class="option"><input type="radio" name="legs" id="legsMild" value="mild"><label for="legsMild">😐 Slightly tired</label></div>
+          <div class="option"><input type="radio" name="legs" id="legsHeavy" value="heavy"><label for="legsHeavy">🪫 Heavy</label></div>
+          <div class="option"><input type="radio" name="legs" id="legsPain" value="pain"><label for="legsPain">⚠️ Pain</label></div>
+        </div>
+      </div>
 
-<div class="q"><label class="title">5) กิน/ดื่มพร้อมแค่ไหน?</label><div class="opts">
-<div class="opt"><input type="radio" name="fuel" id="f1" value="poor"><label for="f1">🥴 น้อยไป</label></div>
-<div class="opt"><input type="radio" name="fuel" id="f2" value="ok" checked><label for="f2">🥤 พอใช้</label></div>
-<div class="opt"><input type="radio" name="fuel" id="f3" value="good"><label for="f3">🍌 พร้อมดี</label></div>
-<div class="opt"><input type="radio" name="fuel" id="f4" value="hot"><label for="f4">☀️ ร้อน/ชื้น</label></div>
-</div></div>
+      <div class="question">
+        <span class="question-title">4. Any tennis around today?</span>
+        <div class="options">
+          <div class="option"><input type="radio" name="tennis" id="tennisNone" value="none" checked><label for="tennisNone">None</label></div>
+          <div class="option"><input type="radio" name="tennis" id="tennisLight" value="light"><label for="tennisLight">🎾 Light / group</label></div>
+          <div class="option"><input type="radio" name="tennis" id="tennisHard" value="hard"><label for="tennisHard">🔥 Singles / hard</label></div>
+          <div class="option"><input type="radio" name="tennis" id="tennisYesterday" value="yesterday"><label for="tennisYesterday">Played hard yesterday</label></div>
+        </div>
+      </div>
 
-<div class="q"><label class="title">6) สัปดาห์นี้ทำอะไรไปแล้ว?</label><div class="opts">
-<div class="opt"><input type="checkbox" id="didEasy"><label for="didEasy">Easy ≥ 2</label></div>
-<div class="opt"><input type="checkbox" id="didLong"><label for="didLong">Long แล้ว</label></div>
-<div class="opt"><input type="checkbox" id="didStrength"><label for="didStrength">Strength ≥ 2</label></div>
-<div class="opt"><input type="checkbox" id="didHard"><label for="didHard">Hard ≥ 2 วัน</label></div>
-</div></div>
+      <div class="question">
+        <span class="question-title">5. How are food, hydration, and conditions?</span>
+        <div class="options">
+          <div class="option"><input type="radio" name="fuel" id="fuelPoor" value="poor"><label for="fuelPoor">🥴 Under-fueled</label></div>
+          <div class="option"><input type="radio" name="fuel" id="fuelOkay" value="ok" checked><label for="fuelOkay">🥤 Okay</label></div>
+          <div class="option"><input type="radio" name="fuel" id="fuelGood" value="good"><label for="fuelGood">🍌 Well prepared</label></div>
+          <div class="option"><input type="radio" name="fuel" id="fuelHot" value="hot"><label for="fuelHot">☀️ Hot / humid</label></div>
+        </div>
+      </div>
 
-<button onclick="go()">ช่วยเลือกให้วันนี้ 💫</button>
-</section>
+      <div class="question">
+        <span class="question-title">6. What have you already done this week?</span>
+        <div class="options">
+          <div class="option"><input type="checkbox" id="didEasy"><label for="didEasy">2+ easy runs</label></div>
+          <div class="option"><input type="checkbox" id="didLong"><label for="didLong">Long run done</label></div>
+          <div class="option"><input type="checkbox" id="didStrength"><label for="didStrength">2+ strength sessions</label></div>
+          <div class="option"><input type="checkbox" id="didHard"><label for="didHard">2+ hard days</label></div>
+        </div>
+      </div>
 
-<section id="res" class="card result"><h2>สรุปสำหรับวันนี้</h2><div class="head"><div id="ico" class="ico sky">🌿</div><div><h2 id="rt" style="margin:0"></h2><div id="sub" class="muted"></div></div></div><div id="kpis" class="kpis"></div><div id="sum" class="sum"></div><div id="plan"></div><button class="secondary" onclick="saveRec()">บันทึกคำแนะนำวันนี้</button></section>
+      <button id="recommendButton" class="primary" type="button">Choose today's session</button>
+    </section>
 
-<section id="history" class="card history"><h2>ประวัติที่บันทึกไว้ 📒</h2><div id="historyList"></div><button class="secondary" onclick="clearHistory()">ล้างประวัติ</button></section>
-<div class="foot">PWA • ใช้ offline ได้หลังเปิดผ่าน HTTPS ครั้งแรก • ประวัติเก็บในเครื่องด้วย localStorage</div>
+    <section id="resultCard" class="card result">
+      <h2>Today's recommendation</h2>
+      <div class="result-head">
+        <div id="resultIcon" class="icon-box blue">🌿</div>
+        <div>
+          <h3 id="resultTitle"></h3>
+          <div id="resultSubtitle" class="caption"></div>
+        </div>
+      </div>
+      <div id="resultKpis" class="kpis"></div>
+      <div id="resultFocus" class="focus"></div>
+      <div id="resultPlan"></div>
+      <button id="saveButton" class="secondary" type="button">Save to history</button>
+    </section>
+
+    <section id="historyPage" class="card history-page">
+      <div class="history-toolbar">
+        <div>
+          <h2 style="margin-bottom:2px">History</h2>
+          <div class="caption">Saved recommendations on this device</div>
+        </div>
+        <div id="historyCount" class="history-count">0 saved</div>
+      </div>
+      <div id="historyList"></div>
+      <button id="backButton" class="secondary" type="button">Back to today</button>
+      <button id="clearButton" class="secondary" type="button">Clear history</button>
+    </section>
+  </main>
+
+  <div class="footer">Version 1.2 · History keeps on local storage</div>
 </div>
-<script>
-const s=document.getElementById('sleep'),sv=document.getElementById('sv');s.oninput=()=>sv.textContent=s.value;
-const r=n=>document.querySelector('input[name="'+n+'"]:checked').value;
-const kp=a=>a.map(x=>'<span class="kpi">'+x+'</span>').join('');
-const st=(a,b)=>'<div class="step"><b>'+a+'</b><div class="muted tiny">'+b+'</div></div>';
-let latest=null;
+<div id="toast" class="toast">Saved</div>
 
-function go(){
- let sl=+s.value,e=r('energy'),l=r('legs'),t=r('tennis'),f=r('fuel');
- let easy=didEasy.checked,long=didLong.checked,str=didStrength.checked,hard=didHard.checked;
- let type,icon,cls,sub,k,sum,plan=[];
- if(e==='symptom'||l==='pain'){type='พัก / Recovery เท่านั้น';icon='🛟';cls='red';sub='วันนี้ไม่เหมาะกับการฝึกหนัก';k=['Rest หรือเดิน 15–30 นาที','ไม่ไล่ HR','ไม่ไล่ pace'];sum='ถ้ามีมึนหัว คลื่นไส้ ใจสั่น เจ็บหน้าอก หรืออาการผิดปกติ ให้หยุดออกกำลังและฟื้นตัวก่อน';plan=[st('ก่อนทำอะไร','ดื่มน้ำ กินให้พอ และพักในที่เย็น'),st('ถ้าอยากขยับ','เดินเบา ๆ + mobility'),st('Goal','ให้ร่างกายดีขึ้น ไม่ใช่เผาแคล')]}
- else if(hard||t==='hard'){type=t==='hard'?'Tennis Day — เก็บแรงไว้คอร์ต':'Easy / Recovery';icon=t==='hard'?'🎾':'🌿';cls=t==='hard'?'peach':'sky';sub='สัปดาห์นี้มีความหนักพอแล้ว';k=t==='hard'?['พักหรือ easy 20–25 นาที','เน้น hydration','เก็บแรงไว้เล่น']:['Easy 30–40 นาที','HR 140–154','RPE 3–4/10'];sum='วันนี้ไม่ต้องเพิ่ม hard running อีก';plan=[st('วอร์ม','เดิน 5–10 นาที'),st('ช่วงหลัก',t==='hard'?'ถ้าจะวิ่ง ให้ easy สั้น ๆ เท่านั้น':'วิ่ง easy โดยดู HR + talk test'),st('Goal','จบแบบยังเหลือแรง')]}
- else if(sl<6||e==='low'||l==='heavy'){type='Easy สั้น / Recovery';icon='🌱';cls='mint';sub='ร่างกายยังไม่พร้อมสำหรับ long หรือ progression';k=['25–35 นาที','HR 140–154','RPE ≤4/10'];sum='สะสม aerobic แบบไม่เพิ่มความล้า';plan=[st('ก่อนเริ่ม','จิบน้ำและเติมคาร์บถ้าหิว'),st('ช่วงหลัก','Easy run หรือ run-walk'),st('ถ้าหนักขึ้น','เปลี่ยนเป็นเดินได้เลย')]}
- else if(!long&&sl>=7&&e!=='low'&&l!=='heavy'&&f!=='poor'&&f!=='hot'&&t==='none'){type='Long Run';icon='🌈';cls='lav';sub='วันนี้พร้อมที่สุดสำหรับสร้างความอึด';k=['50–60 นาที','HR 140–154','RPE 3–4/10'];sum='คุม HR และเวลาเป็นหลัก ไม่ต้องไล่ pace';plan=[st('ก่อนวิ่ง','มื้อหลัก 2–3 ชม.ก่อน หรือคาร์บเบา 30–60 นาที + จิบน้ำ'),st('ช่วงหลัก','วิ่ง easy ต่อเนื่อง 50–60 นาที ถ้า HR drift ให้ผ่อน'),st('Goal','จบแล้วรู้สึกว่ายังต่อได้อีกเล็กน้อย')]}
- else if(!str&&t==='none'&&sl>=7&&e!=='low'){type='Strength';icon='🏋️‍♀️';cls='yellow';sub='เสริมความลีน ความแข็งแรง และ running economy';k=['30–45 นาที','RPE 5–6/10','ฟอร์มมาก่อนน้ำหนัก'];sum='เพิ่มความแข็งแรงโดยไม่ต้องเพิ่ม cardiovascular load มาก';plan=[st('ท่าหลัก','Squat / Split squat / Hip hinge / Glute bridge / Calf raise / Row / Push / Core'),st('จำนวน','2–3 เซ็ตต่อท่า เหลือแรง 2–3 reps'),st('Goal','แข็งแรงขึ้นโดยไม่ทำจนขาพัง')]}
- else if(!easy){type='Easy Run';icon='🏃‍♀️';cls='mint';sub='เติม aerobic volume ให้ครบสัปดาห์';k=['35–45 นาที','HR 140–154','Talk test ผ่าน'];sum='นี่คือ session หลักในการทำให้ pace เดิมใช้ HR ต่ำลง';plan=[st('วอร์ม','เดิน 5–10 นาที'),st('ช่วงหลัก','Easy run 30–40 นาที ไม่ไล่ pace'),st('Goal','จบตอนยังเหลือแรง')]}
- else{type='Easy + Strides / Progression เบา';icon='✨';cls='pink';sub='ฐานสัปดาห์นี้ค่อนข้างครบแล้ว';k=['Easy 25–35 นาที','Strides 4–6 × 20 วิ','หรือ progression เบา'];sum='ถ้าสดมากทำ strides; ถ้าเฉย ๆ จบเป็น easy ธรรมดา';plan=[st('A','Easy 30 นาที + strides 4–6 ครั้ง × 15–20 วินาที'),st('B','Progression เบา: easy 20–25 นาที แล้วเร็วขึ้น 10 นาที'),st('Goal','รักษาความไวโดยไม่กลายเป็น hard day')]}
- if(f==='poor')plan.unshift(st('เติมก่อนเริ่ม','คาร์บย่อยง่ายเล็กน้อย + จิบน้ำก่อน อย่าเริ่มตอนพร่องน้ำ'));
- if(f==='hot')plan.unshift(st('อากาศร้อน/ชื้น','ลดความคาดหวังเรื่อง pace, พกน้ำ/เกลือแร่ และพักเมื่อเวียนหัวหรือคลื่นไส้'));
- if(t==='light')plan.push(st('มีเทนนิสวันนี้','อย่าเพิ่ม hard running ซ้อน'));
- if(t==='yesterday')plan.push(st('เมื่อวานมีเทนนิสหนัก','ถ้าขายังหนัก ให้ตัด strides/progression ออก'));
- ico.className='ico '+cls;ico.textContent=icon;rt.textContent=type;sub.textContent=sub;kpis.innerHTML=kp(k);document.getElementById('sum').innerHTML='<b>วันนี้ควรโฟกัส:</b> '+sum;document.getElementById('plan').innerHTML=plan.join('');
- latest={date:new Date().toLocaleDateString('th-TH'),type,sub,k,sum};
- res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
-}
-function saveRec(){if(!latest)return;const h=JSON.parse(localStorage.getItem('trainingHistory')||'[]');h.unshift(latest);localStorage.setItem('trainingHistory',JSON.stringify(h.slice(0,30)));alert('บันทึกแล้ว ✨')}
-function showPicker(){history.classList.remove('show');picker.style.display='block';res.style.display='';}
-function showHistory(){picker.style.display='none';res.style.display='none';history.classList.add('show');renderHistory();}
-function renderHistory(){const h=JSON.parse(localStorage.getItem('trainingHistory')||'[]');historyList.innerHTML=h.length?h.map(x=>'<div class="history-item"><b>'+x.date+' — '+x.type+'</b><div class="muted tiny">'+x.sub+'</div><div class="tiny" style="margin-top:6px">'+x.k.join(' • ')+'</div></div>').join(''):'<div class="muted">ยังไม่มีประวัติ</div>'}
-function clearHistory(){if(confirm('ล้างประวัติทั้งหมด?')){localStorage.removeItem('trainingHistory');renderHistory()}}
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'))}
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const sleep = $('sleep');
+  const sleepValue = $('sleepValue');
+  const pickerPage = $('pickerPage');
+  const resultCard = $('resultCard');
+  const historyPage = $('historyPage');
+  const navToday = $('navToday');
+  const navHistory = $('navHistory');
+  const toast = $('toast');
+
+  let latestRecommendation = null;
+
+  sleep.addEventListener('input', () => {
+    sleepValue.textContent = sleep.value;
+  });
+
+  function selected(name){
+    const el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : null;
+  }
+
+  function makeKpis(items){
+    return items.map(item => '<span class="kpi">' + item + '</span>').join('');
+  }
+
+  function makeStep(title, body){
+    return '<div class="step"><div class="step-title">' + title + '</div><div class="step-body">' + body + '</div></div>';
+  }
+
+  function showToast(message){
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1500);
+  }
+
+  function showToday(){
+    pickerPage.style.display = 'block';
+    historyPage.classList.remove('show');
+    resultCard.style.display = latestRecommendation ? 'block' : '';
+    navToday.classList.add('active');
+    navHistory.classList.remove('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function showHistory(){
+    pickerPage.style.display = 'none';
+    resultCard.style.display = 'none';
+    historyPage.classList.add('show');
+    navToday.classList.remove('active');
+    navHistory.classList.add('active');
+    renderHistory();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function recommend(){
+    const sleepHours = Number(sleep.value);
+    const energy = selected('energy');
+    const legs = selected('legs');
+    const tennis = selected('tennis');
+    const fuel = selected('fuel');
+    const didEasy = $('didEasy').checked;
+    const didLong = $('didLong').checked;
+    const didStrength = $('didStrength').checked;
+    const didHard = $('didHard').checked;
+
+    let type, icon, colorClass, subtitle, kpis, focus, steps = [];
+
+    if (energy === 'symptom' || legs === 'pain') {
+      type = 'Recovery only';
+      icon = '🛟'; colorClass = 'danger';
+      subtitle = 'Skip hard training today.';
+      kpis = ['Rest or walk 15–30 min', 'No pace target', 'No HR target'];
+      focus = 'Prioritize feeling normal again. If you have dizziness, nausea, unusual palpitations, chest pain, or other concerning symptoms, stop training and recover.';
+      steps = [
+        makeStep('First', 'Hydrate, eat normally, and rest somewhere cool.'),
+        makeStep('If you want to move', 'Keep it to an easy walk and light mobility.'),
+        makeStep('Goal', 'Finish feeling better than when you started.')
+      ];
+    } else if (didHard || tennis === 'hard') {
+      type = tennis === 'hard' ? 'Tennis day' : 'Easy / recovery';
+      icon = tennis === 'hard' ? '🎾' : '🌿';
+      colorClass = tennis === 'hard' ? 'orange' : 'blue';
+      subtitle = tennis === 'hard' ? 'Save your best energy for the court.' : 'Your week already has enough intensity.';
+      kpis = tennis === 'hard'
+        ? ['Rest or easy 20–25 min', 'Hydrate well', 'Keep legs fresh']
+        : ['Easy 30–40 min', 'HR 140–154', 'RPE 3–4/10'];
+      focus = 'Do not add another hard running session today. Protect the quality of the whole week.';
+      steps = [
+        makeStep('Warm-up', 'Walk 5–10 minutes.'),
+        makeStep('Main work', tennis === 'hard' ? 'If you run, keep it short and easy.' : 'Run easy using HR and the talk test.'),
+        makeStep('Goal', 'Finish with plenty of energy left.')
+      ];
+    } else if (sleepHours < 6 || energy === 'low' || legs === 'heavy') {
+      type = 'Short easy / recovery';
+      icon = '🌱'; colorClass = 'teal';
+      subtitle = 'Your body is not ready for a long or progressive session.';
+      kpis = ['25–35 min', 'HR 140–154', 'RPE ≤ 4/10'];
+      focus = 'Build aerobic consistency without adding unnecessary fatigue.';
+      steps = [
+        makeStep('Before', 'Hydrate and have a small carb snack if you are hungry.'),
+        makeStep('Main work', 'Easy run or run-walk based on HR and how you feel.'),
+        makeStep('Adjust', 'Switch to walking if effort starts to climb.')
+      ];
+    } else if (!didLong && sleepHours >= 7 && energy !== 'low' && legs !== 'heavy' && fuel !== 'poor' && fuel !== 'hot' && tennis === 'none') {
+      type = 'Long easy run';
+      icon = '🌈'; colorClass = 'violet';
+      subtitle = 'A good day to build endurance.';
+      kpis = ['50–60 min', 'HR 140–154', 'RPE 3–4/10'];
+      focus = 'Control HR and duration. Pace is secondary.';
+      steps = [
+        makeStep('Before', 'Have a normal meal 2–3 hours before, or easy carbs 30–60 minutes before. Sip fluids ahead of time.'),
+        makeStep('Main work', 'Run easy for 50–60 minutes. If HR drifts upward, slow down or add short walk breaks.'),
+        makeStep('Goal', 'Finish feeling like you could still continue a little longer.')
+      ];
+    } else if (!didStrength && tennis === 'none' && sleepHours >= 7 && energy !== 'low') {
+      type = 'Strength';
+      icon = '🏋️‍♀️'; colorClass = 'amber';
+      subtitle = 'Build strength for running economy and tennis durability.';
+      kpis = ['30–45 min', 'RPE 5–6/10', 'Technique first'];
+      focus = 'Improve strength without turning the session into a leg-destroying workout.';
+      steps = [
+        makeStep('Main movements', 'Squat · split squat · hip hinge · glute bridge · calf raise · row · push · core.'),
+        makeStep('Volume', '2–3 sets per movement, usually stopping with 2–3 reps in reserve.'),
+        makeStep('Goal', 'Build strength gradually while keeping movement quality high.')
+      ];
+    } else if (!didEasy) {
+      type = 'Easy run';
+      icon = '🏃‍♀️'; colorClass = 'teal';
+      subtitle = 'Add aerobic volume to your week.';
+      kpis = ['35–45 min', 'HR 140–154', 'Pass the talk test'];
+      focus = 'This is a key session for making the same pace cost less cardiovascular effort over time.';
+      steps = [
+        makeStep('Warm-up', 'Walk 5–10 minutes.'),
+        makeStep('Main work', 'Run easy for 30–40 minutes without chasing pace.'),
+        makeStep('Goal', 'Finish while you still feel you have more in the tank.')
+      ];
+    } else {
+      type = 'Easy + strides / light progression';
+      icon = '✨'; colorClass = 'rose';
+      subtitle = 'Your weekly basics are mostly covered.';
+      kpis = ['Easy 25–35 min', '4–6 × 20 sec strides', 'or light progression'];
+      focus = 'If you feel excellent, add short strides. If you only feel okay, keep the whole session easy.';
+      steps = [
+        makeStep('Option A', 'Easy 30 minutes + 4–6 relaxed strides of 15–20 seconds with full recovery.'),
+        makeStep('Option B', 'Easy 20–25 minutes, then gradually pick up effort for about 10 minutes.'),
+        makeStep('Goal', 'Maintain speed and movement quality without creating a full hard day.')
+      ];
+    }
+
+    if (fuel === 'poor') {
+      steps.unshift(makeStep('Fuel first', 'Have a small, easy-to-digest carb snack and fluids before you start.'));
+    }
+    if (fuel === 'hot') {
+      steps.unshift(makeStep('Hot / humid conditions', 'Lower pace expectations, bring fluids or electrolytes, and stop if you become dizzy or nauseous.'));
+    }
+    if (tennis === 'light') {
+      steps.push(makeStep('Tennis later', 'Keep this workout easier than usual so you do not stack too much intensity.'));
+    }
+    if (tennis === 'yesterday') {
+      steps.push(makeStep('Hard tennis yesterday', 'If your legs are still heavy, remove strides or progression today.'));
+    }
+
+    $('resultIcon').className = 'icon-box ' + colorClass;
+    $('resultIcon').textContent = icon;
+    $('resultTitle').textContent = type;
+    $('resultSubtitle').textContent = subtitle;
+    $('resultKpis').innerHTML = makeKpis(kpis);
+    $('resultFocus').innerHTML = '<strong>Focus:</strong> ' + focus;
+    $('resultPlan').innerHTML = steps.join('');
+
+    latestRecommendation = {
+      id: Date.now(),
+      savedAt: new Date().toISOString(),
+      dateLabel: new Date().toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'}),
+      type,
+      subtitle,
+      kpis,
+      focus,
+      inputs: {sleepHours, energy, legs, tennis, fuel}
+    };
+
+    resultCard.style.display = 'block';
+    resultCard.classList.add('show');
+    resultCard.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function getHistory(){
+    try{
+      const raw = localStorage.getItem('trainingHistoryV12');
+      const data = raw ? JSON.parse(raw) : [];
+      return Array.isArray(data) ? data : [];
+    }catch(e){
+      return [];
+    }
+  }
+
+  function setHistory(items){
+    localStorage.setItem('trainingHistoryV12', JSON.stringify(items));
+  }
+
+  function saveRecommendation(){
+    if (!latestRecommendation){
+      showToast('Create a recommendation first');
+      return;
+    }
+    const historyItems = getHistory();
+    historyItems.unshift(latestRecommendation);
+    setHistory(historyItems.slice(0, 60));
+    showToast('Saved to history');
+    renderHistory();
+  }
+
+  function renderHistory(){
+    const historyItems = getHistory();
+    $('historyCount').textContent = historyItems.length + (historyItems.length === 1 ? ' saved' : ' saved');
+    if (!historyItems.length){
+      $('historyList').innerHTML = '<div class="empty">No saved recommendations yet.</div>';
+      return;
+    }
+    $('historyList').innerHTML = historyItems.map(item => {
+      const meta = (item.kpis || []).join(' · ');
+      return '<div class="history-item">' +
+        '<div class="history-date">' + (item.dateLabel || '') + '</div>' +
+        '<div class="history-type">' + (item.type || '') + '</div>' +
+        '<div class="history-meta">' + (item.subtitle || '') + '</div>' +
+        '<div class="history-meta" style="margin-top:5px">' + meta + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function clearHistory(){
+    const historyItems = getHistory();
+    if (!historyItems.length){
+      showToast('History is already empty');
+      return;
+    }
+    if (confirm('Clear all saved history on this device?')){
+      localStorage.removeItem('trainingHistoryV12');
+      renderHistory();
+      showToast('History cleared');
+    }
+  }
+
+  $('recommendButton').addEventListener('click', recommend);
+  $('saveButton').addEventListener('click', saveRecommendation);
+  $('navToday').addEventListener('click', showToday);
+  $('navHistory').addEventListener('click', showHistory);
+  $('backButton').addEventListener('click', showToday);
+  $('clearButton').addEventListener('click', clearHistory);
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+})();
 </script>
-</body></html>
+</body>
+</html>

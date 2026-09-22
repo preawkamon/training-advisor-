@@ -3,9 +3,9 @@
   "short_name": "Training",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#fff7fb",
-  "theme_color": "#fff7fb",
-  "description": "เลือก workout ตาม readiness เพื่อพัฒนา aerobic base, strength และ tennis endurance",
+  "background_color": "#F8FAFC",
+  "theme_color": "#F8FAFC",
+  "description": "A readiness-based guide to improve running and tennis performance.",
   "icons": [
     {
       "src": "icon-192.png",
