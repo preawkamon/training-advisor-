@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fff7fb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Training Picker">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Daily Training Picker</title>
+<style>
+:root{--ink:#23324a;--muted:#6f7e94;--line:#e7edf5;--sky:#dff2ff;--mint:#def7ea;--yellow:#fff0b9;--pink:#ffd8e8;--lav:#ebe5ff;--peach:#ffe6ce;--red:#ffe0e0}
+*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(#fff7fb,#f7fbff 55%,#fffdf9);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",sans-serif}
+body{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+.w{max-width:760px;margin:auto;padding:16px 14px 44px}.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;margin-top:14px;box-shadow:0 8px 24px #44608014}.hero{background:linear-gradient(135deg,#fff,#fff0f7,#eef8ff)}
+h1{font-size:28px;margin:0 0 8px}h2{font-size:20px;margin:0 0 10px}.muted{color:var(--muted)}.tiny{font-size:12px}
+.badges{display:flex;gap:7px;flex-wrap:wrap}.badge{padding:7px 9px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:700}
+.q{margin:16px 0}.title{font-weight:800;display:block;margin-bottom:8px}.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.opt input{display:none}.opt label{display:block;padding:11px;border-radius:15px;border:1.5px solid var(--line);text-align:center;background:#fbfcfe}
+.opt input:checked+label{background:#eaf6ff;border-color:#73baf3}.slider{display:flex;gap:10px;align-items:center}.slider input{width:100%}.val{min-width:64px;text-align:right;font-weight:800}
+button{width:100%;border:0;border-radius:16px;padding:14px;font-size:16px;font-weight:800;color:#fff;background:linear-gradient(135deg,#5aaef1,#8a7bf7)}
+button.secondary{background:#fff;color:var(--ink);border:1px solid var(--line);margin-top:8px}.result{display:none}.result.show{display:block}.head{display:flex;gap:12px;align-items:center}.ico{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:25px}
+.sky{background:var(--sky)}.mint{background:var(--mint)}.yellow{background:var(--yellow)}.pink{background:var(--pink)}.lav{background:var(--lav)}.peach{background:var(--peach)}.red{background:var(--red)}
+.kpis{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.kpi{font-size:12px;padding:7px 9px;border-radius:999px;background:#f5f8fb;border:1px solid var(--line);font-weight:700}
+.sum{padding:12px;border-left:4px solid #6db9f5;background:#f6fbff;border-radius:14px}.step{padding:12px;border:1px solid var(--line);border-radius:15px;margin-top:8px}
+.tabbar{display:flex;gap:8px;margin-top:14px}.tabbar button{padding:10px;font-size:14px}.history{display:none}.history.show{display:block}.history-item{padding:12px;border:1px solid var(--line);border-radius:15px;margin-top:8px;background:#fff}
+.foot{text-align:center;color:#79879a;font-size:12px;margin-top:14px}
+@media(max-width:520px){h1{font-size:25px}}
+</style>
+</head>
+<body><div class="w">
+<section class="card hero">
+<h1>🌈 วันนี้ควรออกอะไรดี?</h1>
+<div class="muted">เช็ก readiness แล้วให้แอปช่วยเลือก session ที่เหมาะกับเป้าหมาย <b>ลีนขึ้น + แข็งแรงขึ้น + HR ไม่พุ่งง่าย + เล่นเทนนิสได้นานขึ้น</b></div>
+<div class="badges"><span class="badge">Easy</span><span class="badge">Long</span><span class="badge">Strength</span><span class="badge">Tennis</span><span class="badge">Progression</span></div>
+<div class="tabbar"><button onclick="showPicker()">เลือกวันนี้</button><button class="secondary" onclick="showHistory()">ประวัติ</button></div>
+</section>
+
+<section id="picker" class="card"><h2>เช็กความพร้อมวันนี้ ✨</h2>
+<div class="q"><label class="title">1) นอนกี่ชั่วโมง?</label><div class="slider"><input id="sleep" type="range" min="4" max="10" step=".25" value="7.5"><div class="val"><span id="sv">7.5</span> ชม.</div></div></div>
+
+<div class="q"><label class="title">2) วันนี้รู้สึกสดแค่ไหน?</label><div class="opts">
+<div class="opt"><input type="radio" name="energy" id="e1" value="low"><label for="e1">😵 ต่ำ</label></div>
+<div class="opt"><input type="radio" name="energy" id="e2" value="mid" checked><label for="e2">🙂 กลาง ๆ</label></div>
+<div class="opt"><input type="radio" name="energy" id="e3" value="high"><label for="e3">⚡ สดมาก</label></div>
+<div class="opt"><input type="radio" name="energy" id="e4" value="symptom"><label for="e4">🤢 มึน/คลื่นไส้</label></div>
+</div></div>
+
+<div class="q"><label class="title">3) ขาล้า/เจ็บไหม?</label><div class="opts">
+<div class="opt"><input type="radio" name="legs" id="l1" value="fresh" checked><label for="l1">🌱 สด</label></div>
+<div class="opt"><input type="radio" name="legs" id="l2" value="mild"><label for="l2">😐 ล้าเล็กน้อย</label></div>
+<div class="opt"><input type="radio" name="legs" id="l3" value="heavy"><label for="l3">🪫 หนักมาก</label></div>
+<div class="opt"><input type="radio" name="legs" id="l4" value="pain"><label for="l4">⚠️ เจ็บ</label></div>
+</div></div>
+
+<div class="q"><label class="title">4) วันนี้มีเทนนิสไหม?</label><div class="opts">
+<div class="opt"><input type="radio" name="tennis" id="t1" value="none" checked><label for="t1">ไม่มี</label></div>
+<div class="opt"><input type="radio" name="tennis" id="t2" value="light"><label for="t2">🎾 เบา/หลายคน</label></div>
+<div class="opt"><input type="radio" name="tennis" id="t3" value="hard"><label for="t3">🔥 Singles/หนัก</label></div>
+<div class="opt"><input type="radio" name="tennis" id="t4" value="yesterday"><label for="t4">เมื่อวานหนัก</label></div>
+</div></div>
+
+<div class="q"><label class="title">5) กิน/ดื่มพร้อมแค่ไหน?</label><div class="opts">
+<div class="opt"><input type="radio" name="fuel" id="f1" value="poor"><label for="f1">🥴 น้อยไป</label></div>
+<div class="opt"><input type="radio" name="fuel" id="f2" value="ok" checked><label for="f2">🥤 พอใช้</label></div>
+<div class="opt"><input type="radio" name="fuel" id="f3" value="good"><label for="f3">🍌 พร้อมดี</label></div>
+<div class="opt"><input type="radio" name="fuel" id="f4" value="hot"><label for="f4">☀️ ร้อน/ชื้น</label></div>
+</div></div>
+
+<div class="q"><label class="title">6) สัปดาห์นี้ทำอะไรไปแล้ว?</label><div class="opts">
+<div class="opt"><input type="checkbox" id="didEasy"><label for="didEasy">Easy ≥ 2</label></div>
+<div class="opt"><input type="checkbox" id="didLong"><label for="didLong">Long แล้ว</label></div>
+<div class="opt"><input type="checkbox" id="didStrength"><label for="didStrength">Strength ≥ 2</label></div>
+<div class="opt"><input type="checkbox" id="didHard"><label for="didHard">Hard ≥ 2 วัน</label></div>
+</div></div>
+
+<button onclick="go()">ช่วยเลือกให้วันนี้ 💫</button>
+</section>
+
+<section id="res" class="card result"><h2>สรุปสำหรับวันนี้</h2><div class="head"><div id="ico" class="ico sky">🌿</div><div><h2 id="rt" style="margin:0"></h2><div id="sub" class="muted"></div></div></div><div id="kpis" class="kpis"></div><div id="sum" class="sum"></div><div id="plan"></div><button class="secondary" onclick="saveRec()">บันทึกคำแนะนำวันนี้</button></section>
+
+<section id="history" class="card history"><h2>ประวัติที่บันทึกไว้ 📒</h2><div id="historyList"></div><button class="secondary" onclick="clearHistory()">ล้างประวัติ</button></section>
+<div class="foot">PWA • ใช้ offline ได้หลังเปิดผ่าน HTTPS ครั้งแรก • ประวัติเก็บในเครื่องด้วย localStorage</div>
+</div>
+<script>
+const s=document.getElementById('sleep'),sv=document.getElementById('sv');s.oninput=()=>sv.textContent=s.value;
+const r=n=>document.querySelector('input[name="'+n+'"]:checked').value;
+const kp=a=>a.map(x=>'<span class="kpi">'+x+'</span>').join('');
+const st=(a,b)=>'<div class="step"><b>'+a+'</b><div class="muted tiny">'+b+'</div></div>';
+let latest=null;
+
+function go(){
+ let sl=+s.value,e=r('energy'),l=r('legs'),t=r('tennis'),f=r('fuel');
+ let easy=didEasy.checked,long=didLong.checked,str=didStrength.checked,hard=didHard.checked;
+ let type,icon,cls,sub,k,sum,plan=[];
+ if(e==='symptom'||l==='pain'){type='พัก / Recovery เท่านั้น';icon='🛟';cls='red';sub='วันนี้ไม่เหมาะกับการฝึกหนัก';k=['Rest หรือเดิน 15–30 นาที','ไม่ไล่ HR','ไม่ไล่ pace'];sum='ถ้ามีมึนหัว คลื่นไส้ ใจสั่น เจ็บหน้าอก หรืออาการผิดปกติ ให้หยุดออกกำลังและฟื้นตัวก่อน';plan=[st('ก่อนทำอะไร','ดื่มน้ำ กินให้พอ และพักในที่เย็น'),st('ถ้าอยากขยับ','เดินเบา ๆ + mobility'),st('Goal','ให้ร่างกายดีขึ้น ไม่ใช่เผาแคล')]}
+ else if(hard||t==='hard'){type=t==='hard'?'Tennis Day — เก็บแรงไว้คอร์ต':'Easy / Recovery';icon=t==='hard'?'🎾':'🌿';cls=t==='hard'?'peach':'sky';sub='สัปดาห์นี้มีความหนักพอแล้ว';k=t==='hard'?['พักหรือ easy 20–25 นาที','เน้น hydration','เก็บแรงไว้เล่น']:['Easy 30–40 นาที','HR 140–154','RPE 3–4/10'];sum='วันนี้ไม่ต้องเพิ่ม hard running อีก';plan=[st('วอร์ม','เดิน 5–10 นาที'),st('ช่วงหลัก',t==='hard'?'ถ้าจะวิ่ง ให้ easy สั้น ๆ เท่านั้น':'วิ่ง easy โดยดู HR + talk test'),st('Goal','จบแบบยังเหลือแรง')]}
+ else if(sl<6||e==='low'||l==='heavy'){type='Easy สั้น / Recovery';icon='🌱';cls='mint';sub='ร่างกายยังไม่พร้อมสำหรับ long หรือ progression';k=['25–35 นาที','HR 140–154','RPE ≤4/10'];sum='สะสม aerobic แบบไม่เพิ่มความล้า';plan=[st('ก่อนเริ่ม','จิบน้ำและเติมคาร์บถ้าหิว'),st('ช่วงหลัก','Easy run หรือ run-walk'),st('ถ้าหนักขึ้น','เปลี่ยนเป็นเดินได้เลย')]}
+ else if(!long&&sl>=7&&e!=='low'&&l!=='heavy'&&f!=='poor'&&f!=='hot'&&t==='none'){type='Long Run';icon='🌈';cls='lav';sub='วันนี้พร้อมที่สุดสำหรับสร้างความอึด';k=['50–60 นาที','HR 140–154','RPE 3–4/10'];sum='คุม HR และเวลาเป็นหลัก ไม่ต้องไล่ pace';plan=[st('ก่อนวิ่ง','มื้อหลัก 2–3 ชม.ก่อน หรือคาร์บเบา 30–60 นาที + จิบน้ำ'),st('ช่วงหลัก','วิ่ง easy ต่อเนื่อง 50–60 นาที ถ้า HR drift ให้ผ่อน'),st('Goal','จบแล้วรู้สึกว่ายังต่อได้อีกเล็กน้อย')]}
+ else if(!str&&t==='none'&&sl>=7&&e!=='low'){type='Strength';icon='🏋️‍♀️';cls='yellow';sub='เสริมความลีน ความแข็งแรง และ running economy';k=['30–45 นาที','RPE 5–6/10','ฟอร์มมาก่อนน้ำหนัก'];sum='เพิ่มความแข็งแรงโดยไม่ต้องเพิ่ม cardiovascular load มาก';plan=[st('ท่าหลัก','Squat / Split squat / Hip hinge / Glute bridge / Calf raise / Row / Push / Core'),st('จำนวน','2–3 เซ็ตต่อท่า เหลือแรง 2–3 reps'),st('Goal','แข็งแรงขึ้นโดยไม่ทำจนขาพัง')]}
+ else if(!easy){type='Easy Run';icon='🏃‍♀️';cls='mint';sub='เติม aerobic volume ให้ครบสัปดาห์';k=['35–45 นาที','HR 140–154','Talk test ผ่าน'];sum='นี่คือ session หลักในการทำให้ pace เดิมใช้ HR ต่ำลง';plan=[st('วอร์ม','เดิน 5–10 นาที'),st('ช่วงหลัก','Easy run 30–40 นาที ไม่ไล่ pace'),st('Goal','จบตอนยังเหลือแรง')]}
+ else{type='Easy + Strides / Progression เบา';icon='✨';cls='pink';sub='ฐานสัปดาห์นี้ค่อนข้างครบแล้ว';k=['Easy 25–35 นาที','Strides 4–6 × 20 วิ','หรือ progression เบา'];sum='ถ้าสดมากทำ strides; ถ้าเฉย ๆ จบเป็น easy ธรรมดา';plan=[st('A','Easy 30 นาที + strides 4–6 ครั้ง × 15–20 วินาที'),st('B','Progression เบา: easy 20–25 นาที แล้วเร็วขึ้น 10 นาที'),st('Goal','รักษาความไวโดยไม่กลายเป็น hard day')]}
+ if(f==='poor')plan.unshift(st('เติมก่อนเริ่ม','คาร์บย่อยง่ายเล็กน้อย + จิบน้ำก่อน อย่าเริ่มตอนพร่องน้ำ'));
+ if(f==='hot')plan.unshift(st('อากาศร้อน/ชื้น','ลดความคาดหวังเรื่อง pace, พกน้ำ/เกลือแร่ และพักเมื่อเวียนหัวหรือคลื่นไส้'));
+ if(t==='light')plan.push(st('มีเทนนิสวันนี้','อย่าเพิ่ม hard running ซ้อน'));
+ if(t==='yesterday')plan.push(st('เมื่อวานมีเทนนิสหนัก','ถ้าขายังหนัก ให้ตัด strides/progression ออก'));
+ ico.className='ico '+cls;ico.textContent=icon;rt.textContent=type;sub.textContent=sub;kpis.innerHTML=kp(k);document.getElementById('sum').innerHTML='<b>วันนี้ควรโฟกัส:</b> '+sum;document.getElementById('plan').innerHTML=plan.join('');
+ latest={date:new Date().toLocaleDateString('th-TH'),type,sub,k,sum};
+ res.classList.add('show');res.scrollIntoView({behavior:'smooth'});
+}
+function saveRec(){if(!latest)return;const h=JSON.parse(localStorage.getItem('trainingHistory')||'[]');h.unshift(latest);localStorage.setItem('trainingHistory',JSON.stringify(h.slice(0,30)));alert('บันทึกแล้ว ✨')}
+function showPicker(){history.classList.remove('show');picker.style.display='block';res.style.display='';}
+function showHistory(){picker.style.display='none';res.style.display='none';history.classList.add('show');renderHistory();}
+function renderHistory(){const h=JSON.parse(localStorage.getItem('trainingHistory')||'[]');historyList.innerHTML=h.length?h.map(x=>'<div class="history-item"><b>'+x.date+' — '+x.type+'</b><div class="muted tiny">'+x.sub+'</div><div class="tiny" style="margin-top:6px">'+x.k.join(' • ')+'</div></div>').join(''):'<div class="muted">ยังไม่มีประวัติ</div>'}
+function clearHistory(){if(confirm('ล้างประวัติทั้งหมด?')){localStorage.removeItem('trainingHistory');renderHistory()}}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'))}
+</script>
+</body></html>
